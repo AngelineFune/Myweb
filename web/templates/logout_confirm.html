@@ -1,0 +1,68 @@
+<!-- templates/logout_confirm.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Logout Confirmation</title>
+    <style>
+        body {
+            background-color: #ffe6f0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .popup {
+            background-color: white;
+            padding: 40px;
+            height: 120px;
+            width: 300px;
+            border-radius: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+
+        .popup h2 {
+            margin-bottom: 15px;
+            margin-top: 1px;
+              color: #915f78ff;
+        }
+
+        .popup button {
+            margin: 10px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .yes-btn {
+            background-color: #d185abff;
+            color: white;
+        }
+        .yes-btn:hover {
+            background-color: #bd6290ff;
+            
+        }
+
+        .no-btn {
+            background-color: #cccccc;
+        }
+        .no-btn:hover {
+            background-color: gray;
+        }
+    </style>
+</head>
+<body>
+    <div class="popup">
+        <h2>Are you sure you want to log out?</h2>
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="yes-btn">Yes</button>
+            <a href="{% url 'dashboard' %}"><button type="button" class="no-btn">No</button></a>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,276 @@
+{% load static tz %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>History</title>
+    <style>
+        body {
+            background-color: #ffe6f0;
+            font-family: Arial, sans-serif;
+            margin: 0;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            background-color: #d185ab;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: -45px;
+        }
+
+        .logo {
+            min-width: 140px;
+            display: flex;
+            align-items: center;
+        }
+        .logo img {
+            height: 40px;
+            display: block;
+        }
+
+        /* Right-hand area */
+        .nav-right {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .history-btn {
+            background-color: #d185ab;
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: background-color 0.2s;
+        }
+        .history-btn:hover { background-color: #a75f87; }
+
+        .menu-container {
+            position: relative;
+            display: inline-block;
+        }
+        .menu-icon {
+            font-size: 22px;
+            cursor: pointer;
+            user-select: none;
+            padding: 6px;
+            border-radius: 6px;
+        }
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: white;
+            min-width: 150px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+            border-radius: 8px;
+            z-index: 1100;
+        }
+        .dropdown-menu a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+        .menu-container:hover .dropdown-menu { display: block; }
+        .dropdown-menu a:hover { background-color: #dad6d8ff; }
+
+        /* page content */
+        .schedule { padding: 20px 40px; font-size: 18px; }
+
+        .history-list {
+            width: 70%;
+            margin: 20px auto;
+        }
+        .history-list li {
+            background-color: #fff0f5;
+            border: 2px solid #d185ab;
+            border-radius: 10px;
+            padding: 10px 20px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        h2 { color: #d185ab; text-align: center; margin-top: 24px; }
+
+        /* responsive */
+        @media (max-width: 720px) {
+            .history-list { width: 90%; }
+            .logo { min-width: 90px; }
+            .logo img { height: 32px; }
+        }
+        .delete-all-btn {
+    position: fixed;
+    top: 80px;
+    right: 30px;
+    background-color: #d185ab;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    outline: none;
+    box-shadow: none;
+    border: none;
+    transition: background-color 0.3s ease;
+    z-index: 1000; /* leave this, dropdown z-index is higher */
+}
+
+.delete-all-btn:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.delete-all-btn:hover {
+    background-color: #a75f87;
+}
+.history-table-container {
+    width: 90%;
+    margin: 20px auto;
+    overflow-x: auto;
+    margin-top: 70px;
+}
+
+.history-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color:white;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 20px;
+}
+
+.history-table th, .history-table td {
+    padding: 12px 65px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+    color: #333;
+}
+
+.history-table th {
+    background-color: #d185ab;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+}
+
+.history-table tr:hover {
+    background-color: #f8dce8;
+}
+
+.history-table td {
+    vertical-align: middle;
+}
+
+@media (max-width: 720px) {
+    .history-table-container {
+        width: 95%;
+    }
+    .history-table th, .history-table td {
+        font-size: 14px;
+        padding: 8px 10px;
+    }
+}
+
+ .select-checkbox {
+        text-align: center;
+    }
+    .delete-selected-btn {
+        background-color: #d185ab;
+        color: white;
+        font-weight: bold;
+        text-decoration: none;
+        padding: 8px 14px;
+        border-radius: 8px;
+        font-size: 14px;
+        cursor: pointer;
+        border: none;
+        margin-left:1020px;
+        transition: background-color 0.3s ease;
+        top:100px;
+    }
+    .delete-selected-btn:hover {
+        background-color: #a75f87;
+    }
+
+    </style>
+</head>
+<body>
+    <div class="navbar">
+    <div class="logo">
+        <a href="{% url 'schedule_list' %}" class="d">
+            <img src="{% static 'images/mini.png' %}" alt="Logo">
+        </a>
+    </div>
+    <div class="nav-right">
+        <div class="menu-container">
+            <div class="menu-icon">☰</div>
+            <div class="dropdown-menu">
+                <a href="{% url 'dashboard' %}">Dashboard</a>
+                <a href="{% url 'account' %}">My Account</a>
+                <a href="{% url 'logout_confirm' %}">Logout</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h2></h2>
+ 
+<div class="history-table-container">
+<form method="POST" action="{% url 'delete_selected_history' %}"    
+      onsubmit="return confirm('Delete selected items?');">
+    {% csrf_token %}
+
+     <button type="submit" class="delete-selected-btn">Delete Selected</button>
+    <table class="history-table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Subject</th>
+                <th>Time</th>
+                <th>Deleted At</th>
+    
+                <th class="select-checkbox">
+                    <input type="checkbox" id="select-all">
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in history_items %}
+                <tr>
+                    <td>{{ item.date }}</td>
+                    <td>{{ item.subject }}</td>
+                    <td>{{ item.start_time }} - {{ item.end_time }}</td>
+                    <td>{{ item.deleted_at|localtime|date:"Y-m-d H:i" }}</td>
+                    <td class="select-checkbox">
+                        <input type="checkbox" name="selected_items" value="{{ item.id }}">
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="5" style="text-align:center;">No deleted tasks yet.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+   
+</form>
+</div>
+
+<script>
+    // Select/Deselect all checkboxes
+    document.getElementById('select-all').addEventListener('change', function() {
+        let checkboxes = document.querySelectorAll('input[name="selected_items"]');
+        checkboxes.forEach(cb => cb.checked = this.checked);
+    });
+</script>
+
+</body>
+</html>

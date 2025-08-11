@@ -1,0 +1,201 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+        <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+    <title>Login</title>
+    <style>
+        body {
+            background-color: #ffe6f0;
+            font-family: Arial, sans-serif;
+            padding: 30px;
+        }
+
+        .login-container {
+            background-color: white;
+            position: absolute;
+            left: 700px;
+            width: 450px;
+            height: 330px;
+            margin: auto;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 0 15px rgba(255, 105, 180, 0.5);
+        }
+
+        h2 {
+            text-align: center;
+             font-family: 'Dancing Script', cursive;
+         font-size: 40px;
+         color: #bd6290ff;
+         margin-top:10px;
+          margin-bottom: 20px;
+        }
+
+        input {
+            width: 100%;
+            height: 40px;
+            padding: 5px 10px;
+            margin: 6px 0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #d185abff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            position: relative;
+            top: -5px;
+        }
+
+        button:hover {
+            background-color: #bd6290ff;
+        }
+         
+        .register-link{
+            text-align:center;
+        }
+
+        .black-link{
+          color: black;
+          font-size: 14px;
+          text-decoration:none;
+          position: relative;
+          top: -13px;
+          margin-left: 5px;
+        }
+
+        .black-link:hover{
+            text-decoration: underline;
+        }
+
+        .pink-link {
+            color: #bd6290ff;       
+            font-weight: bold;
+            text-decoration: none;
+            position: relative;
+            bottom: 3px;
+        }
+
+       .pink-link:hover {
+            text-decoration: underline;
+        }
+        
+        .noticeup{
+            position: relative;
+            top: -10px;
+        }
+
+        .noticebot{
+            position: relative;
+            top: -10px;
+        }
+
+       .password-wrapper {
+        position: relative;
+        }
+
+        .toggle-password {
+         position: absolute;
+         left:  395px;
+         top: 50%;
+         transform: translateY(-50%);
+         font-size: 14px;
+          font-weight: bold;
+         color: #bd6290ff;
+         cursor: pointer;
+         text-decoration: none;
+         }
+
+          .toggle-password:hover {
+         text-decoration: underline;
+         }
+
+       .logo{
+
+        height:20px;
+        width: auto;
+        display: block;
+        margin: 0;
+        padding: 0;
+        position: absolute;
+        filter: drop-shadow(0 2px 3px rgba(0,0,0,0.1));
+        transition: transform 0.3s ease;
+        right: 580px;
+        bottom: 350px;
+       }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="login-container">
+        <h2>Login</h2>
+       <form method="POST">
+    {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+          <li style="color: red;">{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+    
+    {% csrf_token %}
+
+    <!-- Username -->
+    <input type="text" name="username" placeholder="Username" value="{{ form.username.value|default_if_none:'' }}" required>
+
+    <!-- Password -->
+    <div class="password-wrapper">
+        <input type="password" id="password" name="password" placeholder="Password" required>
+        <span type="button" class="toggle-password" onclick="togglePassword()">Show</span>
+    </div>
+
+    <!-- Combined error for incorrect login -->
+    {% if form.non_field_errors %}
+      <div class="noticebot" style="color:red; margin-left: 5px; font-size: 14px;">
+        <p>Please enter correct username or password.</p>
+      </div>
+    {% endif %}
+
+    <div class="password-reset">
+        <p><a href="{% url 'password_reset' %}" class="black-link">Forgot Password</a></p>
+    </div>
+
+    <button type="submit">Login</button>
+</form>
+<!-- <div class = "logo">
+    <img src="{% static 'images/main_logo.png' %}" alt="Website Logo"  style="height: 200px;">
+    </div> -->
+
+    <div class = "register-link">
+        <p><a href = "{%url 'register' %}" class= "pink-link">  Create account</a></p>
+    </div>
+    </div>
+
+   <script>
+    function togglePassword() {
+        const passwordInput = document.getElementById('password');
+        const toggleText = document.querySelector('.toggle-password');
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            toggleText.textContent = 'Hide';
+        } else {
+            passwordInput.type = 'password';
+            toggleText.textContent = 'Show';
+        }
+    }
+</script>
+
+
+</body>
+</html>

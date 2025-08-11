@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+    <title>My Account</title>
+    <style>
+        body {
+            background-color: #ffe6f0;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+       h2{
+         font-family: 'Dancing Script', cursive;
+         font-size: 35px;
+         color: #bd6290ff;
+         margin-top:10px;
+       }
+        .navbar {
+            background-color: #d185ab;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .menu-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .menu-icon {
+            font-size: 24px;
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: white;
+            min-width: 150px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+            border-radius: 8px;
+            z-index: 1;
+        }
+
+        .dropdown-menu a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-menu a:hover {
+            background-color: #dad6d8ff;
+        }
+
+        .menu-container:hover .dropdown-menu {
+            display: block;
+        }
+
+        .account-container {
+            background-color: white;
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            text-align: center;
+            height: 320px;
+        }
+
+        .account-container h2 {
+            margin-bottom: 20px;
+            color: #bd6290ff;
+        }
+
+        .account-info {
+            text-align: left;
+            font-size: 18px;
+            line-height: 1.8;
+        }
+        
+        .pink-link{
+            color: #bd6290ff;       
+            font-weight: bold;
+            left:790px;
+            top: 400px;
+            text-decoration: none;
+            position: relative;
+            bottom: 5px;
+           
+        }
+
+        .pink-link:hover{
+            text-decoration: underline;
+        }
+
+        .changepass{
+            width: 135px;
+            height: 20px;
+            padding: 8px;
+            position: absolute;
+            top: 430px;
+            right: 732px;
+            margin-left: 390px;
+            background-color: #d185abff;
+            color: white;
+            border: none;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+             text-decoration: none;
+
+        }
+        
+        .changepass:hover{
+         background-color: #bd6290ff;
+        }
+        .schedule {
+            padding: 20px 40px;
+            font-size: 18px;
+            margin-top: -65px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <div class="logo"></div>
+        <div class="menu-container">
+            <div class="menu-icon">☰</div>
+            <div class="dropdown-menu">
+                <a href="{% url 'dashboard' %}">Dashboard</a>
+                <a href="{% url 'account' %}">My Account</a>
+                <a href="{% url 'logout_confirm' %}">Logout</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="schedule">
+        {% load static %}
+        <a href="{% url 'dashboard' %}" class="d">
+            <img src="{% static 'images/mini.png' %}" alt="Back to Dashboard" style="height: 40px;">
+        </a>
+    </div>  
+
+    <div class="edit-profile">
+           <a href="{% url 'my_account' %}" class = "pink-link" >Edit Profile</a>
+    </div>
+
+        <!--{% load static %}
+ <a href="{% url 'dashboard' %}" class="d">
+    <img src="{% static 'images/mini.png' %}" alt="Back to Dashboard" style="height: 40px;">
+</a>
+-->
+    <div class="account-container">
+        <h2>My Account</h2>
+        <div class="account-info">
+            <p><strong>Username: </strong> {{ user.username }}</p>
+            <p><strong>Email: </strong> {{ user.email }}</p>
+            <p><strong>First Name: </strong> {{ user.first_name }}</p>
+            <p><strong>Last Name: </strong> {{ user.last_name }}</p>
+        </div>
+    </div>
+     
+<a href="{% url 'change_password' %}" class="changepass">Change Password</a>
+
+
+</body>
+</html>

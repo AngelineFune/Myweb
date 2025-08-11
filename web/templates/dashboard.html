@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
+    <title>Home</title>
+    <style>
+        body {
+            background-color: #ffe6f0;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background-color: #d185ab;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .menu-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .menu-icon {
+            font-size: 24px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: white;
+            min-width: 150px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+            border-radius: 8px;
+            z-index: 1;
+        }
+
+        .dropdown-menu a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-menu a:hover {
+            background-color: #dad6d8ff;
+        }
+
+        .menu-container:hover .dropdown-menu {
+            display: block;
+        }
+
+        .welcome {
+            padding: 30px;
+            text-align: center;
+            font-size: 45px;
+            {% comment %} font-weight: bold ; {% endcomment %}
+            font-family: 'Dancing Script', cursive;
+            margin-bottom: -14px;
+            margin-top: -10px;
+        }
+
+        .schedule { 
+            padding: 20px 40px;
+            font-size: 18px;
+            position: absolute;
+            top:120px;
+            width: 300px;
+            margin-top:10px;
+        }
+
+        .schedule h3 {
+            font-size: 22px;
+            margin-top: 12px;
+        }
+
+        .monthly-sched h2{
+            font-size: 22px;
+            margin-bottom: 22px;
+            font-weight: none;
+        }
+
+        .schedule ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+
+        .schedule a {
+            display: inline-block;
+            margin-top: 10px;
+            color: #d185ab;
+            text-decoration: underline;
+        }
+
+        .schedule a:hover {
+            color: #a75f87;
+        }
+
+        /* Added styling for form fields and button */
+        input[type="text"],
+        input[type="time"],
+        select {
+            display: block;
+            width: 100%;
+            max-width: 400px;
+            padding: 10px 15px;
+            margin: 10px 0;
+            border: 2px solid #d185ab;
+            border-radius: 10px;
+            background-color: #fff0f5;
+            font-size: 16px;
+            color: #333;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="time"]:focus,
+        select:focus {
+            outline: none;
+            border-color: #a75f87;
+            background-color: #ffe6f0;
+        }
+
+        button[type="submit"] {
+            background-color: #d185ab;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight:bold;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #a75f87;
+        }
+
+        .monthly-sched{
+            left:390px;
+             position: absolute;
+             margin-bottom: 280px;
+             font-size: 16px;
+        }
+        
+        .view-sched{
+             color: #bd6290ff;       
+            font-weight: bold;
+            margin-top: 30px;
+            text-decoration: none;
+            position: relative;
+            bottom: -20px;
+
+           
+        }
+        
+        .view-sched:hover{
+            text-decoration: underline;
+        }
+       .input-group {
+    position: relative;
+    margin-bottom: 15px;
+    width: 250px; /* adjust as needed */
+}
+
+.styled-input {
+    width: 222px;
+    padding: 12px;
+    padding-top: 20px; /* space for label */
+    border: 2px solid #d185ab;
+    border-radius: 8px;
+    background-color: #ffe6f0;
+    font-size: 16px;
+    color: #333;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.styled-input:focus {
+    border-color: #b35d88;
+    box-shadow: 0 0 5px rgba(179, 93, 136, 0.5);
+}
+
+.input-group label {
+    position: absolute;
+    left: 12px;
+    top: 14px;
+    color: #999;
+    font-size: 14px;
+    pointer-events: none;
+    transition: all 0.2s ease;
+}
+
+/* Float label when focused or has value */
+.styled-input:focus + label,
+.styled-input:not(:placeholder-shown) + label {
+    top: 5px;
+    font-size: 12px;
+    color: #b35d88;
+}
+
+
+.subject{
+
+  width:250px;
+}
+
+.schedule-table {
+     border-collapse: collapse;
+    width: 100%;
+    min-width: 650px; /* new */
+    max-width: 800px; /* extended size */
+    background-color: white;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.schedule-table th, .schedule-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.schedule-table th {
+    background-color: #d185ab;
+    color: white;
+    font-weight: bold;
+}
+
+
+
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <div class="logo"></div>
+        <div class="menu-container">
+            <div class="menu-icon">☰</div>
+            <div class="dropdown-menu">
+                <a href="{% url 'dashboard' %}">Dashboard</a>
+                <a href="{% url 'account' %}">My Account</a>
+                <a href="{% url 'logout_confirm' %}">Logout</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="welcome">
+        Welcome {{ user.username }}
+    </div>
+
+    <div class="schedule">
+        <!-- Form to add a new schedule -->
+        <form method="post" action="{% url 'add_schedule' %}">
+            {% csrf_token %}
+            <h3>Add a New Schedule</h3>
+        <div class = "subject">
+            <input type="text" name="subject" placeholder="Subject" required>
+        </div>  
+<div class="input-group">
+    <input type="date" id="date" name="date" class="styled-input" required>
+    <label for="date">Date</label>
+</div>
+
+<div class="input-group">
+    <input type="time" id="start_time" name="start_time" class="styled-input" required>
+    <label for="start_time">Start Time</label>
+</div>
+
+<div class="input-group">
+    <input type="time" id="end_time" name="end_time" class="styled-input" required>
+    <label for="end_time">End Time</label>
+</div>
+
+            <button type="submit">Add Schedule</button>
+        </form>
+    </div>
+       <div class="monthly-sched">
+    <h2>Monthly Schedule</h2>
+    <table class="schedule-table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Subject</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for sched in schedules %}
+            <tr>
+                <td>{{ sched.date }}</td>
+                <td>{{ sched.subject }}</td>
+                <td>{{ sched.start_time }}</td>
+                <td>{{ sched.end_time }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" style="text-align:center;">No schedules for this month</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{% url 'schedule_list' %}" class="view-sched">View Full Schedule</a>
+</div>
+
+       
+        </div>
+    
+
+</body>
+</html>
