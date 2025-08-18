@@ -5,6 +5,8 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import authenticate
 from .models import Schedule
+from django import forms
+from django.contrib.auth.models import User
 
 class ScheduleForm(forms.ModelForm):
     class Meta:
@@ -56,8 +58,7 @@ class CustomAuthenticationForm(AuthenticationForm):
         'inactive': _("This account is inactive."),
     }
 
-    from django import forms
-from django.contrib.auth.models import User
+   
 
 class EditProfileForm(forms.ModelForm):
     class Meta:

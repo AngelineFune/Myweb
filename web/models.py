@@ -21,7 +21,7 @@ class Schedule(models.Model):
 
     #history
 class History(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)  # ✅ new field
+    user = models.ForeignKey(User, on_delete=models.CASCADE)  
     date = models.DateField()
     subject = models.CharField(max_length=200)
     start_time = models.TimeField()
